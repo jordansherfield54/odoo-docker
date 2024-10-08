@@ -1,0 +1,95 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="revmax_v3.list">
+      <field name="name">revmaxV3 list</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+      <field name="arch" type="xml">
+        
+        <tree>
+          <field name="Code"/>
+          <field name="FiscalDay"/>
+
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="revmax_v3.action_window">
+      <field name="name">Transactions</field>
+      <field name="res_model">account.move</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('move_type', '=', 'out_invoice')]</field>
+      <field name="context">{'default_move_type': 'out_invoice'}</field>
+
+    </record>
+    <record id="revmax_v3.zreport_action" model="ir.actions.act_window">
+    <field name="name">Z Reports</field>
+    <field name="res_model">revmax_v3.zreport</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id="revmax_v3.zreport_tree_view" model="ir.ui.view">
+    <field name="name">zreport.tree</field>
+    <field name="model">revmax_v3.zreport</field>
+    <field name="arch" type="xml">
+        <tree default_order='create_date desc'>
+            <field name="Code"/>
+            <field name="Message"/>
+            <field name="FiscalDay"/>
+            <field name="create_date"/>
+        </tree>
+    </field>
+  </record>
+    <record id="view_company_dependent_data_form" model="ir.ui.view">
+            <field name="name">zreport.form</field>
+            <field name="model">revmax_v3.zreport</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="open_fiscal_day" string="Zreport" type="object" attrs="{'invisible': [('Code', '=', '1')]}"/>
+                    </header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="Code" readonly="True"/>
+                                <field name="DeviceID" readonly="True"/>
+                                <field name="FiscalDay" readonly="True"/>
+                            </group>
+                            <group>
+                                <field name="VerificationLink" readonly="True"/>
+                                <field name="create_date" readonly="True"/>
+                            </group>
+
+
+                        </group>
+                        <group>
+                            <field name="Message" readonly="True" width="60%>                            0%"/>
+                            <field name="Zreport" readonly="True"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <!-- Top menu item -->
+
+    <menuitem name="Revmax V3" id="revmax_v3.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Transactions" id="revmax_v3.menu_1" parent="revmax_v3.menu_root"/>
+    <menuitem name="Z Reports" id="revmax_v3.zreport_menu" parent="revmax_v3.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="List" id="revmax_v3.menu_1_list" parent="revmax_v3.menu_1"
+              action="revmax_v3.action_window"/>
+    <menuitem name="Z Reports" id="revmax_v3" parent="revmax_v3.zreport_menu"
+              action="revmax_v3.zreport_action"/>
+
+  </data>
+</odoo>
