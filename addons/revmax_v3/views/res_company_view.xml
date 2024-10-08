@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <!--    customize Company View Form to add additional vat, BP Fields -->
+        <record id="res_company_customizations_form" model="ir.ui.view">
+            <field name="name">res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name="vat" position="after">
+                    <field name="bpUsdNo" string="TIN NO"/>
+                    <!--            <field name="deviceID" string="Device ID"/>-->
+<!--                    <field name="bpZwlNo" string="Device ID"/>-->
+                    <field name="revmaxurl"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
