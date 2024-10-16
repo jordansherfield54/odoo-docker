@@ -121,7 +121,7 @@ class AccountMove(models.Model):
 
                     myobj = {
                         "Currency": str(record.currency_id.name),
-                        "BranchName": "Bridge SPAR",
+                        "BranchName": "Main",
                         "InvoiceNumber": str(record.name),
                         "CustomerName": CustomerName,
                         "CustomerVatNumber": CustomerVatNumber,
@@ -146,7 +146,7 @@ class AccountMove(models.Model):
                     _logger.info(myobj)
 
                     # Post the data to revmax
-                    x = requests.post(url, headers=headers, data=myobj, timeout=30)
+                    x = requests.post(url, headers=headers, data=myobj, timeout=120)
 
                     data = x.json()
                     log = json.dumps(
